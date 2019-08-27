@@ -59,6 +59,15 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
+		<resources>
+			<resource>
+				<directory>src/mian/resources</directory>
+				<includes>
+					<include>**/*.*</include>
+				</includes>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
 	</build>
 
 </project>
