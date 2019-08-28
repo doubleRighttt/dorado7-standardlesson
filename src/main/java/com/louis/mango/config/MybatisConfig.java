@@ -1,36 +1,29 @@
 package com.louis.mango.config;
 
-import java.io.IOException;
+import javax.sql.DataSource;
 
-import javax.activation.DataSource;
 
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.core.env.Environment;
 
-import javax.sql.*;
+import com.alibaba.druid.pool.DruidDataSource;
 
+@ComponentScan
 @Configuration
-@MapperScan("com.louis.mango.**.dao")
+@MapperScan("com.louis.mango.**.dao")    // 扫描DAO
 public class MybatisConfig {
 	@Autowired
-	private javax.sql.DataSource dataSource;
+	private Environment env;
 	@Bean
-	public SqlSessionFactory sqlSessionFactory() throws Exception {
-		SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
-		sessionFactory.setDataSource(dataSource);
-		sessionFactory.setTypeAliasesPackage("com.louis.mango.**.model");
-		PathMatchingResourcePatternResolver resolver = 
-				new PathMatchingResourcePatternResolver();
-		sessionFactory.setMapperLocations(resolver.getResources("classpath*:**/sqlmap/*.xml"));
-		return sessionFactory.getObject();
+	public DataSource getDataSource() {
+		DruidDataSource dataSource = new DruidDataSource();
+		dataSource.setUrl(env.getProperty("spring.datasource.url"));
+		dataSource.setUsername(env.getProperty("spring.datasource.username"));
+		dataSource.setPassword(env.getProperty("spring.datasource.password"));
+		return dataSource;
 	}
 }
-
-
-
-

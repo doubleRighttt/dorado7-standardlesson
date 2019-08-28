@@ -16,4 +16,9 @@ public class SysUserController {
 	public Object findAll() {
 		return sysUserService.findAll();
 	}
+	@GetMapping("/selectByPrimaryKey")
+	public Object selectByPrimaryKey() {
+		Long i = (long) 1;
+		return sysUserService.selectByPrimaryKey(i);
+	}
 }

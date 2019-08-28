@@ -10,4 +10,6 @@ public interface SysUserService {
 	 * @return
 	 */
 	List<SysUser> findAll();
+	
+	SysUser selectByPrimaryKey(Long id);
 }
